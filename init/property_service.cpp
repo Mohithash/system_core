@@ -1320,7 +1320,11 @@ static void SetSafetyNetProps() {
         {"vendor.boot.vbmeta.device_state", "locked"},
         {"vendor.boot.verifiedbootstate", "green"},
         {"oplusboot.verifiedbootstate", "green"},
-        {"sys.oem_unlock_allowed", "0"},
+        // sys.oem_unlock_allowed is deliberately NOT spoofed here: fabricating it
+        // creates a property that ROM-detection tools (Duck Detector) flag on the
+        // key's presence, and nothing else in the ROM sets it, so leaving it out
+        // makes the property absent - the stock-like state for this key. The
+        // bootloader-unlock verdict comes from TEE attestation, not this sysprop.
         {"ro.oem_unlock_supported", "0"},
         {"ro.crypto.state", "encrypted"},
         {"ro.boot.flash.locked", "1"},
